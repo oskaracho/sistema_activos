@@ -62,15 +62,39 @@
         <option>Maquinaria y Objetos </option>
       </select>
     </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
     <div class="col-sm-3">
       <select class="form-control">
         <option></option>
-        <option>Picina </option>
-        <option>Salon A </option>
-        <option>Salon B </option>
+        <option>Ambientes </option>
+        <option>Habitaciones </option>
+        <option>Maquinaria y Objetos </option>
       </select>
     </div>
-    
+  </div>
+  <div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
+    <div class="col-sm-3">
+      <select class="form-control">
+        <option></option>
+        <option>Ambientes </option>
+        <option>Habitaciones </option>
+        <option>Maquinaria y Objetos </option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
+    <div class="col-sm-3">
+      <select class="form-control">
+        <option></option>
+        <option>Ambientes </option>
+        <option>Habitaciones </option>
+        <option>Maquinaria y Objetos </option>
+      </select>
+    </div>
   </div>
     <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Codigo:</label>
