@@ -48,16 +48,35 @@
  <div class="tab-pane fade in" id="tabs-first">
   
 <!-- FORM CREAR Equipo -->
-<h4>Registrar Activo</h4>
+<h4 align="center">Registrar Mantenimiento</h4>
   <form class="form-horizontal">
   
   <br>
+  <div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
+    <div class="col-sm-3">
+      <select class="form-control">
+        <option></option>
+        <option>Ambientes </option>
+        <option>Habitaciones </option>
+        <option>Maquinaria y Objetos </option>
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <select class="form-control">
+        <option></option>
+        <option>Picina </option>
+        <option>Salon A </option>
+        <option>Salon B </option>
+      </select>
+    </div>
+    
+  </div>
     <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Codigo:</label>
       <div class="col-sm-7">
         <input required type="text" class="form-control" id="inputNombre" placeholder="Codigo "  >
       </div>
-      
     </div>
 
     <div class="form-group">
@@ -74,21 +93,7 @@
       </div>
     </div>
 
-  <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
-    <div class="col-sm-3">
-      <select class="form-control">
-        <option></option>
-        <option>Ambiente 1</option>
-        <option>Ambiente 2</option>
-        <option>Ambiente 3</option>
-        <option>Ambiente 4</option>
-        <option>Ambiente 5</option>
-        <option>Ambiente 6</option>
-        <option>Ambiente 7</option>
-      </select>
-    </div>
-  </div>
+  
 
   <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Fotografia Activo:</label>
@@ -132,7 +137,7 @@
 
 
   <!-- FORM MODIFICAR Equipo -->
-<h4>Modificar Activo</h4>
+<h4 align="center">Modificar Activo</h4>
 <form class="form-horizontal" name="modificar" id="modificar">
   <br>
   <div class="form-group">
@@ -270,7 +275,7 @@
   <!-- FORM ELIMINAR Equipo -->
 
 
-<h4>Eliminar Activo</h4>
+<h4 align="center">Eliminar Activo</h4>
 
 <form class="form-horizontal" name="eliminar" id="eliminar">
   <br>
@@ -415,7 +420,7 @@
 
 
   <!-- FORM ELIMINAR Equipo -->
-<h4>Programados</h4>
+<h4 align="center">Programados</h4>
 
 <form class="form-horizontal" name="modificar" id="modificar">
   <br>

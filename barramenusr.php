@@ -16,7 +16,8 @@
     		<!-- Collect the nav links, forms, and other content for toggling -->
     		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       		<ul class="nav navbar-nav">
-        		<li><a href="/sistema_activos/Administracion">Administracion<span class="sr-only">(current)</span></a></li>
+            <li><a href="/sistema_activos/Administracion">Administracion<span class="sr-only">(current)</span></a></li>
+            <li><a href="/sistema_activos/Movimientos">Movimientos<span class="sr-only">(current)</span></a></li>
             <li><a href="/sistema_activos/Seguimiento">Seguimiento<span class="sr-only"></span></a></li>
             <li><a href="/sistema_activos/Mantenimiento">Mantenimiento<span class="sr-only"></span></a></li>
             <li><a href="/sistema_activos/Almacen">Almacenes<span class="sr-only"></span></a></li>

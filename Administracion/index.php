@@ -223,7 +223,7 @@ function RegistrarDatos(){
  <div class="active tab-pane fade in" id="tabs-first">
   
 <!-- FORM CREAR Activo -->
-<h4>Registrar Activo</h4>
+<h4 align="center">Registrar Activo</h4>
   <form class="form-horizontal" id="formRegistro" method="POST" enctype="multipart/form-data">
   
   <br>
@@ -255,7 +255,7 @@ function RegistrarDatos(){
     </div>
 
   <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
+    <label class="col-sm-offset-1 col-sm-2 control-label">Almacen</label>
     <div class="col-sm-2">
       <select required class="form-control" id="reg-ambiente" name="reg-ambiente">
         <option></option>
@@ -367,7 +367,7 @@ function RegistrarDatos(){
 
 
   <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
+    <label class="col-sm-offset-1 col-sm-2 control-label">Almacen</label>
     <div class="col-sm-3">
       <select class="form-control" id="mod-amb" name="mod-amb">
         <option></option>
@@ -474,7 +474,7 @@ function RegistrarDatos(){
 
 
   <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
+    <label class="col-sm-offset-1 col-sm-2 control-label">Almacen</label>
     <div class="col-sm-3">
       <input type="text" class="form-control" id="eli-amb" placeholder="Ambiente" readonly="">
     </div>
