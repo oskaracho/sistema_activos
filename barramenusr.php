@@ -16,16 +16,30 @@
     		<!-- Collect the nav links, forms, and other content for toggling -->
     		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       		<ul class="nav navbar-nav">
-            <li><a href="/sistema_activos/Administracion">Administracion<span class="sr-only">(current)</span></a></li>
-            <li><a href="/sistema_activos/Movimientos">Movimientos<span class="sr-only">(current)</span></a></li>
-            <li><a href="/sistema_activos/Seguimiento">Seguimiento<span class="sr-only"></span></a></li>
-            <li><a href="/sistema_activos/Mantenimiento">Mantenimiento<span class="sr-only"></span></a></li>
-            <li><a href="/sistema_activos/Almacen">Almacenes<span class="sr-only"></span></a></li>
+            <li><a href="/sistema_activos/views/Administracion">Administracion<span class="sr-only">(current)</span></a></li>
+            <li><a href="/sistema_activos/views/Movimientos">Movimientos<span class="sr-only">(current)</span></a></li>
+            <li><a href="/sistema_activos/views/Seguimiento">Seguimiento<span class="sr-only"></span></a></li>
+            <li><a href="/sistema_activos/views/Mantenimiento">Mantenimiento<span class="sr-only"></span></a></li>
+            <li><a href="/sistema_activos/views/Almacen">Almacenes<span class="sr-only"></span></a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href=""class="modal1" data-toggle="modal" data-target="#registromodal">Registrarse</a></li>
+          <ul class="nav navbar-nav navbar-right" <?php if (isset($_SESSION['id_usu']))
+  {
+    echo ' style="display:none"';
+  }
+   ?>>
+            <li><a href="" class="modal1" data-toggle="modal" data-target="#registromodal">Registrarse</a></li>
             <li><a href="" class="modal1" data-toggle="modal" data-target="#modalingreso">Ingresar</a></li>
           </ul>
+          <div class="iniciado">
+          <ul class="nav navbar-nav navbar-right" <?php if (!isset($_SESSION['id_usu']))
+  {
+    echo ' style="display:none"';
+  }
+   ?>>
+               <li><a href="" ><?php echo $_SESSION['nombre']; ?> <?php echo $_SESSION['apellido']; ?></a></li>
+            <li><a href="/sistema_activos/index.php" class="modal1" id="cerrar">Cerrar Sesion</a></li>
+          </ul>
+          </div>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
@@ -46,20 +60,20 @@
 					<div class="form-group">
     					<label class="col-sm-2 col-sm-offset-1 control-label">CI:</label>
   					  	<div class="col-sm-7">
-    						<input type="text" class="form-control" id="inputCi" placeholder="Carnet de identidad" required>
+    						<input type="text" class="form-control" id="inputCi" name="inputCi" placeholder="Carnet de identidad" required>
    					 	</div>
  			 		</div>
 
  			 		<div class="form-group">
     					<label class="col-sm-2 col-sm-offset-1 control-label">Password:</label>
   					  	<div class="col-sm-7">
-    						<input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+    						<input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" required>
    					 	</div>
  			 		</div>
 
  			 		<div class="form-group">
 			    		<div class="col-sm-offset-3 col-sm-7">
-			      			<button type="submit" class="btn btn-success">Ingresar</button>
+			      			<button type="button" onclick="javascript:inicio_sesion();" class="btn btn-success">Ingresar</button>
 			    		</div>
 			  		</div>
               	</form>
@@ -71,7 +85,6 @@
         </div>
 	</div>
 </div>
-
 
 <!-- Formulario modal registro -->
 

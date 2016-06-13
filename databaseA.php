@@ -8,7 +8,7 @@
 		}
 	}
 	function llamada2(){
-	return $entrada = array("localhost","mybd","root","");
+	return $entrada = array("localhost","bd_gestion_activos","root","");
 	 
 	}
 	
@@ -175,7 +175,7 @@
 			if($this->cxn){
 				return true;
 			}else{
-				echo 'Huascar, se ha producido el siguiente error al intentar acceder a la base de datos: '.mysql_connect_error();
+				echo 'Se ha producido el siguiente error al intentar acceder a la base de datos: '.mysql_connect_error();
 				return false;
 			}
 		}

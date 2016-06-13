@@ -1,3 +1,14 @@
+<?php
+@session_start();
+  if (isset($_SESSION['id_usu']))
+  {
+  
+  }
+  else
+  {
+    header('Location: /sistema_activos/index.php');  
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +24,7 @@
 <body>
 <!--  llamada a la cabecera -->
  	<?php 
-    require_once ("../../sistema_activos/barramenusr.php");
+    require_once ("../../../sistema_activos/barramenusr.php");
   ?>
 
 <!-- Contenedor Pestaña ABM Activo -->

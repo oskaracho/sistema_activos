@@ -1,3 +1,10 @@
+<?php
+@session_start();
+  if (!isset($_SESSION['id_usu']))
+  {
+    header('Location: /sistema_activos/index.php');  
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +13,7 @@
     <script src="/sistema_activos/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/sistema_activos/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
     <script src="/sistema_activos/bootstrap-3.3.6-dist/jquery.min.js"></script>
+    <script src="/sistema_activos/controllers/validadores.js"></script>
     <script type="text/javascript">
     	$(document).ready(function() {
     	
@@ -23,7 +31,7 @@ function RegistrarDatos(){
           console.log(formData);
           console.log(formData.toString());
           $.ajax({
-            url: 'activo.php',
+            url: '../../controllers/activo.php',
             type: $('#formRegistro').attr('method'),
             data: formData,
             contentType: false,
@@ -33,7 +41,12 @@ function RegistrarDatos(){
               var resp = $.parseJSON(data);
             console.log(data);
             console.log(resp);
-            
+            if(resp.resp==1){
+              var html='<div class="alert alert-success ocultar" role="alert" align="center" >Insertado!</div>';
+              $("#formRegistro")[0].reset();
+            }
+            $('#resultado_reg').html(html);
+
           })
           .fail(function() {
             console.log("error");
@@ -47,7 +60,7 @@ function RegistrarDatos(){
             console.log(o);
             
               $.ajax({
-                url: 'activo.php',
+                url: '../../controllers/activo.php',
                 type: 'POST',
                 data: o
               })
@@ -59,7 +72,16 @@ function RegistrarDatos(){
                 var html = '<div class="table-responsive col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Codigo</th><th style="display:none"></th><th>Nombre</th><th>Descripcion</th></tr></thead><tbody>';
         
                   for(i in resp){ 
-                    html+='<tr onclick="mostrar_datos(this)"><td>'+resp[i].idactivo+'</td><td>'+resp[i].nombre+'</td><td>'+resp[i].descripcion+'</td><td style="display:none">'+resp[i].foto+'</td><td style="display:none">'+resp[i].idalmacen+'</td><td style="display:none">'+resp[i].tipo+'</td></tr>';
+                    html+='<tr onclick="mostrar_datos(this)"><td>'
+                    +resp[i].idActivo+'</td><td>'
+                    +resp[i].nombre_ac+'</td><td style="display:none">'
+                    +resp[i].cantidad_ac+'</td><td style="display:none">'
+                    +resp[i].idSub_almacen+'</td><td style="display:none">'
+                    +resp[i].fecha_caducidad+'</td><td style="display:none">'
+                    +resp[i].garantia_valida+'</td><td>'
+                    +resp[i].descripcion+'</td><td style="display:none">'
+                    +resp[i].idEstado_ac+'</td><td style="display:none">'
+                    +resp[i].foto+'</td></tr>';
                   }
                   html+= '</tbody></table></div>';
 
@@ -75,20 +97,29 @@ function RegistrarDatos(){
           {
               cod_mod= $(f).find('td:eq(0)').text();
               nom_mod = $(f).find('td:eq(1)').text();
-              desc_mod = $(f).find('td:eq(2)').text();
-              foto_mod=$(f).find('td:eq(3)').text();
-              amb_mod = $(f).find('td:eq(4)').text();
-              tipo_mod = $(f).find('td:eq(5)').text();
+              cant_mod = $(f).find('td:eq(2)').text();
+              sub_mod=$(f).find('td:eq(3)').text();
+              feca_mod = $(f).find('td:eq(4)').text();
+              fega_mod = $(f).find('td:eq(5)').text();
+              desc_mod = $(f).find('td:eq(6)').text();
+              ides_mod = $(f).find('td:eq(7)').text();
+              foto_mod = $(f).find('td:eq(8)').text();
               console.log(foto_mod);
-              var html4='<img src="'+foto_mod+'"  alt="..." class="img-rounded" width="200" heigth="200">'
+              var html4='<img src="/sistema_activos/'+foto_mod+'"  alt="..." class="img-rounded" width="200" heigth="200">'
+              var html5='<div class="form-group "><label class="col-sm-3 control-label">Fecha Caducidad:</label><div class="col-xs-3"> <input type="date" name="fecha-ca-mod" step="1" min="2015-01-01" max="2020-12-31" value="'+feca_mod+'"></div></div>'
+              var html6='<div class="form-group "><label class="col-sm-3 control-label">Fecha Garantia:</label><div class="col-xs-3"><input type="date" name="fecha-ga-mod" step="1" min="2015-01-01" max="2020-12-31" value="'+fega_mod+'"></div></div>'
               
 
               $('#mod-codigo').val(cod_mod);
               $('#mod-nombre').val(nom_mod);
-              $('#mod-tipo').val(tipo_mod);
+              $('#mod-cantidad').val(cant_mod);
+              $('#mod-almacen').val(sub_mod);
+              $('#fecha-ga-mod').val(fega_mod);
               $('#mod-desc').val(desc_mod);
-              $('#mod-amb').val(amb_mod);
+              $('#mod-estado').val(ides_mod);
               $('#mostrar-ima-mod').html(html4);
+              $('#mostrar_fecha_ca').html(html5);
+              $('#mostrar_fecha_ga').html(html6);
               
 
           }
@@ -99,7 +130,7 @@ function RegistrarDatos(){
             console.log(o);
             
              $.ajax({
-                url: 'activo.php',
+                url: '../../controllers/activo.php',
                 type: 'POST',
                 data: o
               })
@@ -111,7 +142,12 @@ function RegistrarDatos(){
                 var html = '<div class="table-responsive col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Codigo</th><th style="display:none"></th><th>Nombre</th><th>Descripcion</th></tr></thead><tbody>';
         
                   for(i in resp){ 
-                    html+='<tr onclick="mostrar_datos_eli(this)"><td>'+resp[i].idactivo+'</td><td>'+resp[i].nombre+'</td><td>'+resp[i].descripcion+'</td><td style="display:none">'+resp[i].foto+'</td><td style="display:none">'+resp[i].idalmacen+'</td></tr>';
+                    html+='<tr onclick="mostrar_datos_eli(this)"><td>'
+                    +resp[i].idActivo+'</td><td>'
+                    +resp[i].nombre_ac+'</td><td style="display:none">'
+                    +resp[i].idSub_almacen+'</td><td>'
+                    +resp[i].descripcion+'</td><td style="display:none">'
+                    +resp[i].foto+'</td></tr>';
                   }
                   html+= '</tbody></table></div>';
 
@@ -127,19 +163,15 @@ function RegistrarDatos(){
           {
               cod_eli= $(f).find('td:eq(0)').text();
               nom_eli = $(f).find('td:eq(1)').text();
-              desc_eli = $(f).find('td:eq(2)').text();
-              foto_eli=$(f).find('td:eq(3)').text();
-              amb_eli = $(f).find('td:eq(4)').text();
+              desc_eli = $(f).find('td:eq(3)').text();
+              foto_eli=$(f).find('td:eq(4)').text();
               console.log(foto_eli);
-              var html4='<img src="'+foto_eli+'"  alt="..." class="img-rounded" width="200" heigth="200">'
-              if(amb_eli=1){amb_eli="Almacen 1";}
-              if(amb_eli=2){amb_eli="Almacen 2";}
-              if(amb_eli=3){amb_eli="Almacen 3";}
+              var html_fo='<img src="/sistema_activos/'+foto_eli+'"  alt="..." class="img-rounded" width="200" heigth="200">'
 
               $('#eli-codigo').val(cod_eli);
               $('#eli-nombre').val(nom_eli);
-              $('#eli-amb').val(amb_eli);
-              $('#mostrar-ima-eli').html(html4);
+              $('#eli-desc').val(desc_eli);
+              $('#mostrar-ima-eli').html(html_fo);
               
 
           }
@@ -148,7 +180,7 @@ function RegistrarDatos(){
         setTimeout("$('.ocultar').hide();", 5000);
         console.log(cod_eli);
           $.ajax({
-            url: 'activo.php',
+            url: '../../controllers/activo.php',
             type: 'POST',
             data: {idActivo: cod_eli, opcion: 'eliminar'}
           })
@@ -157,6 +189,11 @@ function RegistrarDatos(){
             console.log(data);
             console.log(resp);
             var t= resp.resp;
+            if(t==1){
+              var html='<div class="alert alert-success ocultar" role="alert" align="center" >Insertado!</div>';
+              $("#formEliminar")[0].reset();
+            }
+            $('#resultado_eli').html(html);
           })
           .fail(function() {
             console.log("error");
@@ -173,7 +210,7 @@ function RegistrarDatos(){
           console.log(formData);
           $.ajax({
                 type: $('#formModificar').attr('method'),
-                url:'activo.php',
+                url:'../../controllers/activo.php',
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -183,6 +220,11 @@ function RegistrarDatos(){
             console.log(data);
             console.log(resp);
             var t= resp.resp;
+            if(t==1){
+              var html='<div class="alert alert-success ocultar" role="alert" align="center" >Modificado!</div>';
+              $("#formModificar")[0].reset();
+            }
+            $('#resultado_mod').html(html);
             
           })
           .fail(function() {
@@ -194,11 +236,8 @@ function RegistrarDatos(){
 </head>
 <body>
 <!--  llamada a la cabecera -->
-	<?php 
-		//require_once ("../../sistema_activos/cabecera1.php");
- 	?>
- 	<?php 
-    require_once ("../../sistema_activos/barramenusr.php");
+<?php 
+    require_once $_SERVER["DOCUMENT_ROOT"]."/sistema_activos/barramenusr.php";
   ?>
 
 <!-- Contenedor Pestaña ABM Activo -->
@@ -230,7 +269,7 @@ function RegistrarDatos(){
     <div class="form-group" >
       <label class="col-sm-offset-1 col-sm-2 control-label">Codigo:</label>
       <div class="col-sm-7">
-        <input required type="text" class="form-control" id="reg-codigo" name="reg-codigo" placeholder="Codigo "  >
+        <input required type="text" class="form-control" id="reg-codigo" name="reg-codigo" placeholder="Codigo " onkeypress="return soloNumeros(event)" >
       </div>
       
     </div>
@@ -238,35 +277,61 @@ function RegistrarDatos(){
     <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
       <div class="col-sm-7">
-        <input required type="text" class="form-control" id="reg-nombre" name="reg-nombre" placeholder="Nombre" >
+        <input required type="text" class="form-control" id="reg-nombre" name="reg-nombre" placeholder="Nombre" onkeypress="return soloLetras(event)" >
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Tipo:</label>
+      <label class="col-sm-offset-1 col-sm-2 control-label">Cantidad:</label>
       <div class="col-sm-7">
-        <input required type="text" class="form-control" id="reg-tipo" name="reg-tipo" placeholder="tipo" >
+        <input required type="text" class="form-control" id="reg-cantidad" name="reg-cantidad" placeholder="Cantidad" onkeypress="return soloNumeros(event)">
       </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Descripcion:</label>
-      <div class="col-sm-7">
-      <textarea class="form-control" rows="4" type="text" class="form-control" id="reg-desc" name="reg-desc" placeholder="Descripcion del activo"></textarea>      </div>
     </div>
 
   <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Almacen</label>
+    <label class="col-sm-offset-1 col-sm-2 control-label">Almacen:</label>
     <div class="col-sm-2">
-      <select required class="form-control" id="reg-ambiente" name="reg-ambiente">
+      <select required class="form-control" id="reg-almacen" name="reg-almacen">
         <option></option>
-        <option value="1">Almacen 1</option>
-        <option value="2">Almacen 2</option>
-        <option value="3">Almacen 3</option>
+        <option value="1">Cama Frigorifica 1 </option>
+        <option value="2">Cama Frigorifica 2</option>
+        <option value="3">Abarrotes</option>
+        <option value="4">Enlatados</option>
+        <option value="5">Mueble</option>
+        <option value="6">Objetos</option>
+        <option value="7">Limpieza</option>
+        <option value="8">Minibar</option>
+        <option value="9">Zonas comunes</option>
       </select>
     </div>
   </div>
-
-
+  <div class="form-group ">
+            <label class="col-sm-3 control-label">Fecha Caducidad:</label>
+          <div class="col-xs-3">
+            <input type="date" name="fecha-ca-reg" step="1" min="2015-01-01" max="2020-12-31" value="<?php echo date("Y-m-d");?>" required>
+          </div>              
+  </div>
+  <div class="form-group ">
+            <label class="col-sm-3 control-label">Fecha Garantia:</label>
+          <div class="col-xs-3">
+            <input type="date" name="fecha-ga-reg" step="1" min="2015-01-01" max="2020-12-31" value="<?php echo date("Y-m-d");?>" required>
+          </div>              
+  </div>
+<div class="form-group">
+      <label class="col-sm-offset-1 col-sm-2 control-label">Descripcion:</label>
+      <div class="col-sm-7">
+      <textarea class="form-control" rows="4" type="text" class="form-control" id="reg-desc" name="reg-desc" placeholder="Descripcion del activo" required ></textarea>      
+      </div>
+  </div>
+<div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Estado:</label>
+    <div class="col-sm-2">
+      <select required class="form-control" id="reg-estado" name="reg-estado" >
+        <option></option>
+        <option value="1">Buen Estado </option>
+        <option value="2">Moderado</option>
+      </select>
+    </div>
+  </div>
   <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Imagen Ejercicio:</label>
                 <div class="col-sm-3" >
@@ -277,7 +342,7 @@ function RegistrarDatos(){
                 <label class="col-sm-offset-1 col-sm-2 control-label">Subir imagen:</label>
                 <label class=" control-label"></label>
                 <div class="col-sm-3" >
-                  <input type="file" id="abrir-ima" class="form-control-file col-xs-12" name="abrir-ima" value="ser">
+                  <input required type="file" id="abrir-ima" class="form-control-file col-xs-12" name="abrir-ima" value="ser">
                 </div>
               </div>
               <script src="mostrar-ima.js"></script>
@@ -290,6 +355,7 @@ function RegistrarDatos(){
       <button type="submit" class="btn btn-success">Registrar</button>
     </div>
   </div>
+  <div id="resultado_reg"></div>
 
    
 </form>
@@ -311,7 +377,7 @@ function RegistrarDatos(){
   <div class="form-group">
     <label class="col-sm-offset-1 col-sm-2 control-label" >Codigo:</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="buscar-codigo" placeholder="Codigo"  >
+      <input type="text" class="form-control" id="buscar-codigo" placeholder="Codigo" onkeypress="return soloNumeros(event)" >
     </div>
     <div class="col-xs-6 col-sm-2">
        <button  type="button" class="list-group-item" data-toggle="tooltip" data-placement="top" title="Busqueda de jugador">
@@ -338,10 +404,10 @@ function RegistrarDatos(){
   </div>
  
   
-    <div class="form-group">
+    <div class="form-group" >
       <label class="col-sm-offset-1 col-sm-2 control-label">Codigo:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="mod-codigo" name="mod-codigo" placeholder="Codigo"  >
+        <input required type="text" class="form-control" id="mod-codigo" name="mod-codigo" placeholder="Codigo " onkeypress="return soloNumeros(event)" >
       </div>
       
     </div>
@@ -349,31 +415,49 @@ function RegistrarDatos(){
     <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="mod-nombre" name="mod-nombre" placeholder="Nombre" >
+        <input required type="text" class="form-control" id="mod-nombre" name="mod-nombre" placeholder="Nombre" onkeypress="return soloLetras(event)">
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Tipo:</label>
+      <label class="col-sm-offset-1 col-sm-2 control-label">Cantidad:</label>
       <div class="col-sm-7">
-        <input required type="text" class="form-control" id="mod-tipo" name="mod-tipo" placeholder="tipo" >
+        <input required type="text" class="form-control" id="mod-cantidad" name="mod-cantidad" placeholder="tipo" onkeypress="return soloNumeros(event)">
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Descripcion</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control" id="mod-desc" name="mod-desc" placeholder="Descripcion" >
-      </div>
-    </div>
-
 
   <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Almacen</label>
-    <div class="col-sm-3">
-      <select class="form-control" id="mod-amb" name="mod-amb">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Almacen:</label>
+    <div class="col-sm-2">
+      <select required class="form-control" id="mod-almacen" name="mod-almacen">
         <option></option>
-        <option value="1">Almacen 1</option>
-        <option value="2">Almacen 2</option>
-        <option value="3">Almacen 3</option>
+        <option value="1">Cama Frigorifica 1 </option>
+        <option value="2">Cama Frigorifica 2</option>
+        <option value="3">Abarrotes</option>
+        <option value="4">Enlatados</option>
+        <option value="5">Mueble</option>
+        <option value="6">Objetos</option>
+        <option value="7">Limpieza</option>
+        <option value="8">Minibar</option>
+        <option value="9">Zonas comunes</option>
+      </select>
+    </div>
+  </div>
+ <div  id="mostrar_fecha_ca" ></div>
+ <div  id="mostrar_fecha_ga" ></div>
+
+<div class="form-group">
+      <label class="col-sm-offset-1 col-sm-2 control-label">Descripcion:</label>
+      <div class="col-sm-7">
+      <textarea required class="form-control" rows="4" type="text" class="form-control" id="mod-desc" name="mod-desc" placeholder="Descripcion del activo"></textarea>      
+      </div>
+  </div>
+<div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Estado:</label>
+    <div class="col-sm-2">
+      <select required class="form-control" id="mod-estado" name="mod-estado">
+        <option></option>
+        <option value="1">Buen Estado </option>
+        <option value="2">Moderado</option>
       </select>
     </div>
   </div>
@@ -389,19 +473,20 @@ function RegistrarDatos(){
                 <label class="col-sm-offset-1 col-sm-2 control-label">Subir imagen:</label>
                 <label class=" control-label"></label>
                 <div class="col-sm-3" >
-                  <input type="file" id="abrir-ima-mod" class="form-control-file col-xs-12" name="abrir-ima-mod">
+                  <input required type="file" id="abrir-ima-mod" class="form-control-file col-xs-12" name="abrir-ima-mod">
                 </div>
               </div>
 <!--               <script src="mostrar-ima-mod.js"></script>
  -->
   <div class="form-group">
     <div class="col-sm-offset-4 col-sm-2">
-      <button type="submit" class="btn btn-primary">Limpiar</button>
+      <button type="button" class="btn btn-primary">Limpiar</button>
     </div>
     <div class="col-sm-offset-1 col-sm-2">
       <button type="submit" class="btn btn-success">Modificar</button>
     </div>
   </div>
+  <div id="resultado_mod"></div>
 
   
     
@@ -424,7 +509,7 @@ function RegistrarDatos(){
   <div class="form-group">
     <label class="col-sm-offset-1 col-sm-2 control-label"  >Codigo:</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="buscar-codigo-eli" placeholder="Codigo"  >
+      <input type="text" class="form-control" id="buscar-codigo-eli" placeholder="Codigo" onkeypress="return soloNumeros(event)" >
     </div>
     <div class="col-xs-6 col-sm-2">
        <button  type="button" class="list-group-item" data-toggle="tooltip" data-placement="top" title="Busqueda Activos">
@@ -447,9 +532,9 @@ function RegistrarDatos(){
   <div>
     <center><h4>Datos del Activo</h4></center>
   </div>
-
+<form id="formEliminar">
     <div class="form-group">
-                <label class="col-sm-offset-1 col-sm-2 control-label">Imagen Ejercicio:</label>
+                <label class="col-sm-offset-1 col-sm-2 control-label">Imagen Activo:</label>
                 <div class="col-sm-3" >
                   <div  id="mostrar-ima-eli" name="mostrar-ima-eli" class="img-rounded"></div>
 
@@ -465,7 +550,7 @@ function RegistrarDatos(){
     </div>
 
     <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Codigo</label>
+      <label class="col-sm-offset-1 col-sm-2 control-label">Codigo:</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" id="eli-codigo" placeholder="Codigo"  readonly="">
       </div>
@@ -474,9 +559,9 @@ function RegistrarDatos(){
 
 
   <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Almacen</label>
-    <div class="col-sm-3">
-      <input type="text" class="form-control" id="eli-amb" placeholder="Ambiente" readonly="">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Descripcion:</label>
+    <div class="col-sm-5">
+      <textarea type="text" class="form-control" id="eli-desc" placeholder="Descripcion" readonly=""></textarea>
     </div>
   </div>
 
@@ -491,6 +576,8 @@ function RegistrarDatos(){
   </div>
   </div>
 
+  <div id="resultado_eli"></div>
+</form>
 <!-- Formulario modal2n -->
 
  <div class="modal fade" id="myModalEliminarActivo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

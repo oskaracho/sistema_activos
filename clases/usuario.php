@@ -1,32 +1,24 @@
 <?php 
+		include("databaseA.php");
 	class Usuario
 	{
 		public $idUsuario;
 		public $ci;
 		public $nombre;
-		public $nombre2;
-		public $apellido_p;
-		public $apellido_m;
+		public $apellido;
 		public $idTipo_usuario;
-		public $idUsuarioCreador;
-		public $idDatos;
-		public $direccion;
-		public $telefono;
-		public $celular;
-		public $departamento;
-		public $interno;
-		public $correos;
+		public $contrasena;
 
 		public static function encontrar_a_todos(){
-			$resultados= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where a.idUsuario=b.idUsuario");
+			$resultados= execSqlA("SELECT * FROM usuario");
 			$objeto_array=array();
 			while ($row = mysqli_fetch_array($resultados)) {
 				$objeto_array[]=self::instanciacion($row);
 			}
 			return $objeto_array;
 		}
-		public static function encontrar_por_id($id){
-			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where  a.idUsuario=b.idUsuario and a.ci=$id limit 1");
+		public static function encontrar_por_ci($ci){
+			$resultado= execSqlA("SELECT * FROM usuario where ci=$ci limit 1");
 			$objeto_array=array();
 			while ($row = mysqli_fetch_array($resultado)) {
 				$objeto_array[]=self::instanciacion($row);
