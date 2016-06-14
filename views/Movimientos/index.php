@@ -14,7 +14,184 @@
     <script src="/sistema_activos/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
     <script src="/sistema_activos/bootstrap-3.3.6-dist/jquery.min.js"></script>
     <script type="text/javascript">
-    	
+    	$(document).ready(function() {
+      
+            buscar_teclado_modificar();
+
+      });
+      function buscar_teclado_modificar(){
+            var o = "opcion="+ encodeURIComponent('buscar_sol_mov');//{a: n, opcion:'buscar'};
+            console.log(o);
+            
+              $.ajax({
+                url: '../../controllers/movimientos.php',
+                type: 'POST',
+                data: o
+              })
+              .done(function(data2) {
+                var resp = $.parseJSON(data2);//json a objeto
+                console.log(data2);
+                console.log(resp);
+
+                var html = '<div class="table-responsive col-sm-12" style="height: 250px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Cod-Sol</th><th>Ambiente</th><th>Requeriere</th><th>Cantidad</th><th>Solicitante</th><th>Fecha Generada</th><th>Fecha Requerida</th><th>Estado</th></tr></thead><tbody>';
+        
+                  for(i in resp){ 
+                    if(resp[i].idEstado==1){var estado="Urgente";
+                    html+='<tr onclick="mostrar_datos(this)"><td>'
+                    +resp[i].idSol_movimiento+'</td><td style="display:none">'
+                    +resp[i].idAmbiente+'</td><td>'
+                    +resp[i].nom_am+'</td><td style="display:none">'
+                    +resp[i].idActivo+'</td><td>'
+                    +resp[i].nom_ac+'</td><td>'
+                    +resp[i].cantidad+'</td><td>'
+                    +resp[i].idSolicitante+'</td><td>'
+                    +resp[i].fecha_generada+'</td><td>'
+                    +resp[i].fecha_requerida+'</td><td class="danger">'
+                    +estado+'</td></tr>';
+                  }
+                    if(resp[i].idEstado==2){var estado="Moderado";
+                    html+='<tr onclick="mostrar_datos(this)"><td>'
+                    +resp[i].idSol_movimiento+'</td><td style="display:none">'
+                    +resp[i].idAmbiente+'</td><td>'
+                    +resp[i].nom_am+'</td><td style="display:none">'
+                    +resp[i].idActivo+'</td><td>'
+                    +resp[i].nom_ac+'</td><td>'
+                    +resp[i].cantidad+'</td><td>'
+                    +resp[i].idSolicitante+'</td><td>'
+                    +resp[i].fecha_generada+'</td><td>'
+                    +resp[i].fecha_requerida+'</td><td class="warning">'
+                    +estado+'</td></tr>';
+                  }
+                    if(resp[i].idEstado==5){var estado="Aceptado";
+                    html+='<tr onclick="mostrar_datos(this)"><td>'
+                    +resp[i].idSol_movimiento+'</td><td style="display:none">'
+                    +resp[i].idAmbiente+'</td><td>'
+                    +resp[i].nom_am+'</td><td style="display:none">'
+                    +resp[i].idActivo+'</td><td>'
+                    +resp[i].nom_ac+'</td><td>'
+                    +resp[i].cantidad+'</td><td>'
+                    +resp[i].idSolicitante+'</td><td>'
+                    +resp[i].fecha_generada+'</td><td>'
+                    +resp[i].fecha_requerida+'</td><td class="success">'
+                    +estado+'</td></tr>';
+                  }
+                    if(resp[i].idEstado==6){var estado="Rechazado";
+                     html+='<tr onclick="mostrar_datos(this)"><td>'
+                    +resp[i].idSol_movimiento+'</td><td style="display:none">'
+                    +resp[i].idAmbiente+'</td><td>'
+                    +resp[i].nom_am+'</td><td style="display:none">'
+                    +resp[i].idActivo+'</td><td>'
+                    +resp[i].nom_ac+'</td><td>'
+                    +resp[i].cantidad+'</td><td>'
+                    +resp[i].idSolicitante+'</td><td>'
+                    +resp[i].fecha_generada+'</td><td>'
+                    +resp[i].fecha_requerida+'</td><td style="display:none">'
+                    +resp[i].idEstado+'</td><td class="active" style="text-decoration: line-through;">'
+                    +estado+'</td></tr>';
+                  }
+                }
+                  html+= '</tbody></table></div>';
+
+                  $('#tabla_movimientos').html(html);
+
+              })
+              .fail(function() {
+                console.log("error");
+              })
+             
+          }
+          function mostrar_datos(f)
+          {
+              codsol_mov= $(f).find('td:eq(0)').text();
+              idam_mov = $(f).find('td:eq(1)').text();
+              idac_mov = $(f).find('td:eq(3)').text();
+              cant_mov=$(f).find('td:eq(5)').text();
+              idso_mov = $(f).find('td:eq(6)').text();
+              fere_mov = $(f).find('td:eq(8)').text();
+              $fere_mov=fere_mov;
+              
+              $('#mov-codigo').val(idac_mov);
+              $('#mov-amb').val(idam_mov);
+              $('#mov-cantidad').val(cant_mov);
+              var html5='<label class="col-sm-offset-1 col-sm-4 control-label">Fecha Requerida:</label><div class="col-sm-3"> <input type="date" name="fecha-ca-mod" step="1" min="2015-01-01" max="2020-12-31" value="'+fere_mov+'"></div>'
+
+              $('#fech').html(html5);
+              $('#mov-estado').val(idso_mov);
+              
+
+          }
+          function aceptar_mov(){
+
+      setTimeout("$('.ocultar').hide();", 5000);
+            var o = "cod_sol="+encodeURIComponent(codsol_mov)+"&opcion="+ encodeURIComponent('mover')+"&cod_ac="+ encodeURIComponent(idac_mov)+"&cant="+ encodeURIComponent(cant_mov)+"&cod_am="+ encodeURIComponent(idam_mov);
+            console.log(o);
+            
+              $.ajax({
+                url: '../../controllers/movimientos.php',
+                type: 'POST',
+                data: o
+              })
+              .done(function(data2) {
+                var resp = $.parseJSON(data2);//json a objeto
+                console.log(data2);
+                console.log(resp);
+                if(resp.resp==0){
+                  var men='<div class="alert alert-danger ocultar" role="alert" align="center" >No existe Stock</div>';
+                }
+                if(resp.resp==1){
+                  var men='<div class="alert alert-danger ocultar" role="alert" align="center" >No se puede cubrir la cantidad requerida</div>';
+                }
+                if(resp.resp==2){
+                  var men='<div class="alert alert-success ocultar" role="alert" align="center" >Se realizo la solicitud</div>';
+                  var boton='<a class="col-sm-offset-1 col-sm-2" href="/sistema_activos/tcpdf/too/Prestamo.php?mov='+codsol_mov+'" target="_blank"><i class="fa fa-print"></i>Imprimir</a>';
+                  $('#imprimir_boton').html(boton);
+                }
+                if(resp.resp==3){
+                  var men='<div class="alert alert-danger ocultar" role="alert" align="center" >No se realizo la solicitud</div>';
+                }
+                  $('#mostrar_mensaje_mov').html(men);
+
+              })
+              .fail(function() {
+                console.log("error");
+              })
+             
+          }
+          function rechazar_mov(){
+
+      setTimeout("$('.ocultar').hide();", 5000);
+            var o = "cod_sol="+encodeURIComponent(codsol_mov)+"&opcion="+ encodeURIComponent('mover')+"&cod_ac="+ encodeURIComponent(idac_mov)+"&cant="+ encodeURIComponent(cant_mov)+"&cod_am="+ encodeURIComponent(idam_mov);
+            console.log(o);
+            
+              $.ajax({
+                url: '../../controllers/movimientos.php',
+                type: 'POST',
+                data: o
+              })
+              .done(function(data2) {
+                var resp = $.parseJSON(data2);//json a objeto
+                console.log(data2);
+                console.log(resp);
+                if(resp.resp==0){
+                  var men='<div class="alert alert-danger ocultar" role="alert" align="center" >No existe Stock</div>';
+                }
+                if(resp.resp==1){
+                  var men='<div class="alert alert-danger ocultar" role="alert" align="center" >No se puede cubrir la cantidad requerida</div>';
+                }
+                if(resp.resp==2){
+                  var men='<div class="alert alert-success ocultar" role="alert" align="center" >Se realizo la solicitud</div>';
+                }
+                if(resp.resp==3){
+                  var men='<div class="alert alert-danger ocultar" role="alert" align="center" >No se realizo la solicitud</div>';
+                }
+                  $('#mostrar_mensaje_mov').html(men);
+
+              })
+              .fail(function() {
+                console.log("error");
+              })
+             
+          }
     </script>
 </head>
 <body>
@@ -45,69 +222,64 @@
   
 <!-- FORM CREAR Activo -->
 <h4 align="center"> Movimiento Material</h4>
+<div class="form-group">
+    
+<div id="tabla_movimientos"></div>
+
+  </div>
   <form class="form-horizontal" id="formMovimentos" method="POST" enctype="multipart/form-data">
   
   <br>
     <div class="form-group" >
-      <label class="col-sm-offset-1 col-sm-2 control-label">Codigo:</label>
+      <label class="col-sm-offset-3 col-sm-2 control-label">Codigo Activo:</label>
       <div class="col-sm-3">
-        <input required type="text" class="form-control" id="mov-codigo" name="mov-codigo" placeholder="Codigo "  >
-      </div>
-      
-    </div>
-
-    <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">de:</label>
-      <div class="col-sm-3">
-        <input required type="text" class="form-control" id="mov-ubicacion" name="mov-ubicacion" placeholder="Ubicacion Actual" >
+        <input required readonly type="text" class="form-control" id="mov-codigo" name="mov-codigo" placeholder="Codigo "  >
       </div>
     </div>
+    <div class="form-group" >
+      <label class="col-sm-offset-3 col-sm-2 control-label">Cantidad:</label>
+      <div class="col-sm-3">
+        <input required readonly type="text" class="form-control" id="mov-cantidad" name="mov-codigo" placeholder="Cantidad "  >
+      </div>
+    </div>
+    <div class="form-group" >
+      <label class="col-sm-offset-3 col-sm-2 control-label">Codigo Destino:</label>
+      <div class="col-sm-3">
+        <input required readonly type="text" class="form-control" id="mov-amb" name="mov-codigo" placeholder="Codigo "  >
+      </div>
+    </div>
     <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">a:</label>
-    <div class="col-sm-2">
-      <select required class="form-control" id="mov-destino" name="mov-destino">
-        <option></option>
-        <option value="1">Almacen 1</option>
-        <option value="2">Almacen 2</option>
-        <option value="3">Almacen 3</option>
-      </select>
-    </div>
+      <div id="fech">
+            <label class="col-sm-offset-1 col-sm-4 control-label">Fecha Requerida:</label>
+          <div class="col-sm-3">
+            <input type="date" readonly name="fecha-mov-re" step="1" min="2015-01-01" max="2020-12-31" value="<?php echo date("Y-m-d");?>" required>
+          </div> 
+      </div>             
   </div>
-    
+
   <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Almacen</label>
-    <div class="col-sm-2">
-      <select required class="form-control" id="mov-ambiente" name="mov-ambiente">
+    <label class="col-sm-offset-2 col-sm-3 control-label">Estado Requerimiento</label>
+    <div class="col-sm-3">
+      <select required readonly class="form-control" id="mov-estado" name="mov-ambiente">
         <option></option>
-        <option value="1">Almacen 1</option>
-        <option value="2">Almacen 2</option>
-        <option value="3">Almacen 3</option>
-      </select>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Nombre Almacen</label>
-    <div class="col-sm-2">
-      <select required class="form-control" id="mov-ambiente" name="mov-ambiente">
-        <option></option>
-        <option value="1"></option>
-        <option value="2">Almacen 2</option>
-        <option value="3">Almacen 3</option>
+        <option value="1">Urgente</option>
+        <option value="2">Moderado</option>
       </select>
     </div>
   </div>
 
-
+<br><br>
 
   <div class="form-group">
     <div class="col-sm-offset-4 col-sm-2">
-      <button type="button" class="btn btn-primary">Limpiar</button>
+      <button type="button" class="btn btn-danger">Rechazar</button>
     </div>
     <div class="col-sm-offset-1 col-sm-2">
-      <button type="submit" class="btn btn-success">movistrar</button>
+      <button type="button" onclick="javascript:aceptar_mov();" class="btn btn-success">Aceptar</button>
     </div>
+    <div id="imprimir_boton"></div>
   </div>
-
+<div id="mostrar_mensaje_mov"></div>
    
 </form>
  <!-- FIN FORM CREAR Activo -->

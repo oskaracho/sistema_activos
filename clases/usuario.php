@@ -1,5 +1,4 @@
 <?php 
-		include("databaseA.php");
 	class Usuario
 	{
 		public $idUsuario;
@@ -19,6 +18,16 @@
 		}
 		public static function encontrar_por_ci($ci){
 			$resultado= execSqlA("SELECT * FROM usuario where ci=$ci limit 1");
+			$objeto_array=array();
+			while ($row = mysqli_fetch_array($resultado)) {
+				$objeto_array[]=self::instanciacion($row);
+			}
+			//$encontrado=mysqli_fetch_array($objeto_array);
+
+			return !empty($objeto_array)? array_shift($objeto_array):false;
+		}
+		public static function encontrar_por_id($id){
+			$resultado= execSqlA("SELECT * FROM usuario where idUsuario=$id limit 1");
 			$objeto_array=array();
 			while ($row = mysqli_fetch_array($resultado)) {
 				$objeto_array[]=self::instanciacion($row);

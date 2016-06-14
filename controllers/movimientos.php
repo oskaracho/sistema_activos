@@ -5,55 +5,57 @@ date_default_timezone_set('America/La_Paz');
 //registrar_prestamo() no se esta ausando todavia
 		$fecha_actual=date("Y/m/d");
 		include("../clases/activo.php");
+		include("../clases/movimientos.php");
+		include("../clases/ambiente.php");
 		$opcion =$_POST['opcion'];
 switch ($opcion) {
-		case "registrar":
-		$activo=new Activo();
-					$activo->idActivo=$_POST['reg-codigo'];
-				    $activo->nombre_ac=$_POST['reg-nombre'];//
-				    $activo->cantidad_ac=$_POST['reg-cantidad'];//
-				    $activo->idSub_almacen=$_POST['reg-almacen'];//  
-				    $activo->fecha_caducidad=$_POST['fecha-ca-reg'];//  
-				    $activo->garantia_valida=$_POST['fecha-ga-reg'];//
-				    $activo->descripcion=$_POST['reg-desc'];// 
-				    $activo->idEstado_ac=$_POST['reg-estado'];//
-				    $activo->fecha_alta=$fecha_actual;// 
-				    $foto=$_FILES["abrir-ima"]["name"];
-				    $ruta=$_FILES["abrir-ima"]["tmp_name"];
-					$activo->foto=filter_var("imactivos/".$foto,FILTER_SANITIZE_STRING);
-					$destino=filter_var("../imactivos/".$foto,FILTER_SANITIZE_STRING);
-					copy($ruta,$destino);
-					$activo->idUsuario=$_SESSION['id_usu'];
-					$activo->estado_existencia=1;
-					$result2=$activo->registrar_activo();
-			    	
-			if ($result2){		
-	
-					$resultados=array('resp'=> 1);
+		case "mover":
+		$cod_ac=$_POST['cod_ac'];
+		$cod_sol=$_POST['cod_sol'];
+		$cant_sol=$_POST['cant'];
+		$cod_am=$_POST['cod_am'];
+		$activo=Activo::encontrar_activo($cod_ac);
+		$cant=$activo->cantidad_ac;
+		if($cant==0){$resultados=array('resp'=> 0); }
+		else{	
+			if($cant_sol>$cant){$resultados=array('resp'=> 1);}
+				else{
+					$cantita_total=$cant-$cant_sol;
+					$mod=Activo::modificar_cantidad_activo($cod_ac,$cantita_total);
+					$mover=Solicitud_movimiento::mover_activo($cod_am,$cod_ac,$cant_sol);
+					$mov_estado=Solicitud_movimiento::modificar_estado_sol($cod_sol,5,$fecha_actual,$_SESSION['id_usu']);
+					if ($mover){		
+			
+							$resultados=array('resp'=> 2);
+						}
+						else
+						{
+							$resultados=array('resp'=> 3);
+						}
 				}
-				else
-				{
-					$resultados=array('resp'=> 0);
-				}
+		}
 			echo json_encode($resultados);
 			flush();				
+	
 		break;
-		case "buscar":
-		$ids=$_POST['a'];
+		case "buscar_sol_mov":
 			$resultados=array();
 			$c=0;
-			$pres=Activo::activos_por_id($ids);
+			$pres=Solicitud_movimiento::encontrar_a_todos();
 			 foreach ($pres as $pre) {
+			 	$mov=Ambiente::encontrar_ambiente($pre->idAmbiente);
+			 	$activo=Activo::encontrar_activo($pre->idActivo);
 			 	$resultados[$c]=array(
+			 		'idSol_movimiento'=>$pre->idSol_movimiento,
+			 		'idAmbiente'=>$pre->idAmbiente,
+			 		'nom_am'=>$mov->nombre_am,
 			 		'idActivo'=>$pre->idActivo,
-			 		'nombre_ac'=>$pre->nombre_ac,
-			 		'cantidad_ac'=>$pre->cantidad_ac,
-			 		'idSub_almacen'=>$pre->idSub_almacen,
-			 		'fecha_caducidad'=>$pre->fecha_caducidad,
-			 		'garantia_valida'=>$pre->garantia_valida,
-			 		'descripcion'=>$pre->descripcion,
-			 		'idEstado_ac'=>$pre->idEstado_ac,
-			 		'foto'=>$pre->foto);
+			 		'nom_ac'=>$activo->nombre_ac,
+			 		'cantidad'=>$pre->cantidad,
+			 		'idSolicitante'=>$pre->idSolicitante,
+			 		'fecha_generada'=>$pre->fecha_generada,
+			 		'fecha_requerida'=>$pre->fecha_requerida,
+			 		'idEstado'=>$pre->idEstado);
 					$c++;
 			 }
 			echo json_encode($resultados);

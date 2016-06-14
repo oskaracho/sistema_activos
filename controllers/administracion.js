@@ -52,7 +52,7 @@ function RegistrarDatos(){
                 console.log(data2);
                 console.log(resp);
 
-                var html = '<div class="table-responsive col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Codigo</th><th style="display:none"></th><th>Nombre</th><th>Descripcion</th></tr></thead><tbody>';
+                var html = '<div class="table-responsive col-sm-offset-2 col-sm-10" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Codigo</th><th style="display:none"></th><th>Nombre</th><th>Descripcion</th></tr></thead><tbody>';
         
                   for(i in resp){ 
                     html+='<tr onclick="mostrar_datos(this)"><td>'
@@ -122,7 +122,7 @@ function RegistrarDatos(){
                 console.log(data2);
                 console.log(resp);
 
-                var html = '<div class="table-responsive col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Codigo</th><th style="display:none"></th><th>Nombre</th><th>Descripcion</th></tr></thead><tbody>';
+                var html = '<div class="table-responsive col-sm-offset-2 col-sm-10" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Codigo</th><th style="display:none"></th><th>Nombre</th><th>Descripcion</th></tr></thead><tbody>';
         
                   for(i in resp){ 
                     html+='<tr onclick="mostrar_datos_eli(this)"><td>'

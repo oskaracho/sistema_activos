@@ -58,6 +58,18 @@
 			}
 			
 		}
+		public function modificar_cantidad_activo($id,$cant){
+		$result2= updateA(self::$db_tabla, array('cantidad_ac'), array(2) , array($cant), 'idActivo', $id);
+
+			 if($result2){
+			 	///Falta capturar el ultimo insert
+				return true;
+
+			}else{
+				return false;
+			}
+			
+		}
 		
 		
 		public static function eliminar_activo($id){
@@ -70,6 +82,16 @@
 				}
 				return $response;
 		}
+
+		public static function encontrar_activo($id){
+			$resultados= execSqlA("SELECT * FROM activo WHERE idActivo=$id limit 1");
+			$objeto_array=array();
+			while ($row = mysqli_fetch_array($resultados)) {
+				$objeto_array[]=self::instanciacion($row);
+			}
+			return !empty($objeto_array)? array_shift($objeto_array):false;
+		}
+
 		public static function instanciacion($var){
 			$objeto=new self;
 			foreach ($var as $atributo => $value) {
