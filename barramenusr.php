@@ -17,8 +17,7 @@
     		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       		<ul class="nav navbar-nav">
             <li><a href="/sistema_activos/views/Administracion">Administracion<span class="sr-only">(current)</span></a></li>
-            <li><a href="/sistema_activos/views/Movimientos">Movimientos<span class="sr-only"></span></a></li>
-            <li><a href="/sistema_activos/views/Inventario">Inventario<span class="sr-only"></span></a></li>
+            <li><a href="/sistema_activos/views/Movimientos">Movimientos<span class="sr-only">(current)</span></a></li>
             <li><a href="/sistema_activos/views/Seguimiento">Seguimiento<span class="sr-only"></span></a></li>
             <li><a href="/sistema_activos/views/Mantenimiento">Mantenimiento<span class="sr-only"></span></a></li>
             <li><a href="/sistema_activos/views/Almacen">Almacenes<span class="sr-only"></span></a></li>
