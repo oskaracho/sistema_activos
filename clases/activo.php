@@ -25,7 +25,14 @@
 			}
 			return $objeto_array;
 		}
-		
+		public static function encontrar_nombre_id($ids){
+			$resultados= execSqlA("SELECT nombre_ac FROM activo WHERE idActivo=$ids");
+			$objeto_array=array();
+			while ($row = mysqli_fetch_array($resultados)) {
+				$objeto_array[]=self::instanciacion($row);
+			}
+			return $objeto_array;
+		}
 		public static function activos_por_id($id){
 			$resultado= execSqlA("SELECT * FROM activo where idActivo LIKE '%$id%' and estado_existencia=1");
 			$objeto_array=array();
