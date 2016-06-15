@@ -15,6 +15,7 @@ switch ($opcion) {
 		$cant_sol=$_POST['cant'];
 		$cod_am=$_POST['cod_am'];
 		$activo=Activo::encontrar_activo($cod_ac);
+		
 		$cant=$activo->cantidad_ac;
 		if($cant==0){$resultados=array('resp'=> 0); }
 		else{	

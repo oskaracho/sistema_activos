@@ -18,6 +18,7 @@
       
             buscar_teclado_modificar();
 
+
       });
       function buscar_teclado_modificar(){
             var o = "opcion="+ encodeURIComponent('buscar_sol_mov');//{a: n, opcion:'buscar'};
@@ -102,7 +103,7 @@
           }
           function mostrar_datos(f)
           {
-              codsol_mov= $(f).find('td:eq(0)').text();
+             codsol_mov= $(f).find('td:eq(0)').text();
               idam_mov = $(f).find('td:eq(1)').text();
               idac_mov = $(f).find('td:eq(3)').text();
               cant_mov=$(f).find('td:eq(5)').text();
@@ -110,9 +111,12 @@
               fere_mov = $(f).find('td:eq(8)').text();
               $fere_mov=fere_mov;
               
+               
+
               $('#mov-codigo').val(idac_mov);
               $('#mov-amb').val(idam_mov);
-              $('#mov-cantidad').val(cant_mov);
+             $('#mov-cantidad').val(cant_mov);
+             
               var html5='<label class="col-sm-offset-1 col-sm-4 control-label">Fecha Requerida:</label><div class="col-sm-3"> <input type="date" name="fecha-ca-mod" step="1" min="2015-01-01" max="2020-12-31" value="'+fere_mov+'"></div>'
 
               $('#fech').html(html5);
@@ -120,6 +124,7 @@
               
 
           }
+          
           function aceptar_mov(){
 
       setTimeout("$('.ocultar').hide();", 5000);

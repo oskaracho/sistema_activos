@@ -19,7 +19,11 @@
     <script type="text/javascript">
     	$(document).ready(function() {
 
+
+
         $('#inputcodigo').on('keyup', buscar_teclado_modificar)
+        $('#buscar-codigo').on('keyup', buscar_finalizados)
+        $('#inputcodigo2').on('keyup', buscar_todos)
 
     	})
      function buscar_teclado_modificar(){
@@ -38,7 +42,7 @@
                 console.log(data2);
                 console.log(resp);
 
-                var html = '<div class="table-responsive col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Codigo</th><th style="display:none"></th><th>Nombre</th><th>Descripcion</th></tr></thead><tbody>';
+               var html = '<div class="table-responsive col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Codigo</th><th style="display:none"></th><th>ambiente</th><th>idSolicitante</th><th>tarea</th><th>fecha_generada</th><th>fecha_requerida</th><th>hora_requerida</th><th>idEstado</th><th>hora_realizada</th><th>observaciones</th></tr></thead><tbody>';
         
                   for(i in resp){ 
 
@@ -48,20 +52,208 @@
                     html+='<tr onclick="mostrar_datos(this)"><td>'
 
                     +resp[i].idSol_correctivo+'</td><td>'
-                    +resp[i].idAmbiente+'</td><td style="display:none">'
-                    +resp[i].idSolicitante+'</td><td style="display:none">'
-                    +resp[i].tarea+'</td><td style="display:none">'
-                    +resp[i].fecha_generada+'</td><td style="display:none">'
+                    +resp[i].idAmbiente+'</td><td >'
+                    +resp[i].idSolicitante+'</td><td >'
+                    +resp[i].tarea+'</td><td>'
+                    +resp[i].fecha_generada+'</td><td >'
                     +resp[i].fecha_requerida+'</td><td>'
                     +resp[i].hora_requerida+'</td><td>'
-                    +resp[i].idEstado+'</td><td style="display:none">'
-                    +resp[i].hora_realizada+'</td><td style="display:none">'
-                    +resp[i].observaciones+'</td><td style="display:none">'
+                    +resp[i].idEstado+'</td><td >'
+                    +resp[i].hora_realizada+'</td><td >'
+                    +resp[i].observaciones+'</td><td >'
                     +resp[i].idUsuario+'</td></tr>';
                   }
                   html+= '</tbody></table></div>';
 
                   $('#mostrar-sol-co').html(html);
+
+              })
+              .fail(function() {
+                console.log("error");
+              })
+             
+          }
+
+
+             function buscar_finalizados(){
+            var n = $('#buscar-codigo').val();
+            console.log(n);
+            var o = "a="+encodeURIComponent(n)+"&opcion="+ encodeURIComponent('buscar_finalizados');//{a: n, opcion:'buscar'};
+            console.log(o);
+            
+              $.ajax({
+                url: '../../controllers/seguimiento.php',
+                type: 'POST',
+                data: o
+              })
+              .done(function(data2) {
+                var resp = $.parseJSON(data2);//json a objeto
+                console.log(data2);
+                console.log(resp);
+
+                var html = '<div class="table-responsive col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Codigo</th><th style="display:none"></th><th>ambiente</th><th>idSolicitante</th><th>tarea</th><th>fecha_generada</th><th>fecha_requerida</th><th>hora_requerida</th><th>idEstado</th><th>hora_realizada</th><th>observaciones</th></tr></thead><tbody>';
+        
+                  for(i in resp){ 
+
+
+
+
+                    html+='<tr onclick="mostrar_datos2(this)"><td>'
+
+                    +resp[i].idSol_correctivo+'</td><td>'
+                    +resp[i].idAmbiente+'</td><td >'
+                    +resp[i].idSolicitante+'</td><td >'
+                    +resp[i].tarea+'</td><td>'
+                    +resp[i].fecha_generada+'</td><td >'
+                    +resp[i].fecha_requerida+'</td><td>'
+                    +resp[i].hora_requerida+'</td><td>'
+                    +resp[i].idEstado+'</td><td >'
+                    +resp[i].hora_realizada+'</td><td >'
+                    +resp[i].observaciones+'</td><td >'
+                    +resp[i].idUsuario+'</td></tr>';
+                  }
+                  html+= '</tbody></table></div>';
+                  $('#mostrar-fin').html(html);
+                 
+
+              })
+              .fail(function() {
+                console.log("error");
+              })
+             
+          }
+
+           function buscar_todos(){
+            var n = $('#inputcodigo2').val();
+            console.log(n);
+            var o = "a="+encodeURIComponent(n)+"&opcion="+ encodeURIComponent('buscar_todos');//{a: n, opcion:'buscar'};
+            console.log(o);
+            
+              $.ajax({
+                url: '../../controllers/seguimiento.php',
+                type: 'POST',
+                data: o
+              })
+              .done(function(data2) {
+                var resp = $.parseJSON(data2);//json a objeto
+                console.log(data2);
+                console.log(resp);
+
+                var html = '<div class="table-responsive col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Codigo</th><th style="display:none"></th><th>ambiente</th><th>idSolicitante</th><th>tarea</th><th>fecha_generada</th><th>fecha_requerida</th><th>hora_requerida</th><th>idEstado</th><th>hora_realizada</th><th>observaciones</th></tr></thead><tbody>';
+        
+                  for(i in resp){ 
+
+
+
+
+                    html+='<tr onclick="mostrar_datos3(this)"><td>'
+
+                    +resp[i].idSol_correctivo+'</td><td>'
+                    +resp[i].idAmbiente+'</td><td >'
+                    +resp[i].idSolicitante+'</td><td >'
+                    +resp[i].tarea+'</td><td>'
+                    +resp[i].fecha_generada+'</td><td >'
+                    +resp[i].fecha_requerida+'</td><td>'
+                    +resp[i].hora_requerida+'</td><td>'
+                    +resp[i].idEstado+'</td><td >'
+                    +resp[i].hora_realizada+'</td><td >'
+                    +resp[i].observaciones+'</td><td >'
+                    +resp[i].idUsuario+'</td></tr>';
+                  }
+                  html+= '</tbody></table></div>';
+                  $('#mostrar-todos').html(html);
+                 
+
+              })
+              .fail(function() {
+                console.log("error");
+              })
+             
+          }
+
+
+           function mostrar_datos(f)
+          {
+            
+
+              idSol_correctivo= $(f).find('td:eq(0)').text();
+              idAmbiente= $(f).find('td:eq(1)').text();
+              idSolicitante= $(f).find('td:eq(2)').text();
+              tarea= $(f).find('td:eq(3)').text();
+              fecha_generada= $(f).find('td:eq(4)').text();
+              fecha_requerida= $(f).find('td:eq(5)').text();
+              hora_requerida= $(f).find('td:eq(6)').text();
+              idEstado= $(f).find('td:eq(7)').text();
+              hora_realizada= $(f).find('td:eq(8)').text();
+              observaciones= $(f).find('td:eq(9)').text();
+              idUsuario= $(f).find('td:eq(10)').text();
+              
+              $('#man-codigo').val(idSol_correctivo);
+              $('#man-lugar').val(idAmbiente);
+
+              //var html5='<label class="col-sm-offset-1 col-sm-4 control-label">Fecha Requerida:</label><div class="col-sm-3"> <input type="date" name="fecha-ca-mod" step="1" min="2015-01-01" max="2020-12-31" value="'+fere_mov+'"></div>'
+
+             // $('#fech').html(html5);
+             // $('#mov-estado').val(idso_mov);
+              
+          }
+
+          function mostrar_datos2(f)
+          {
+            
+
+              idSol_correctivo= $(f).find('td:eq(0)').text();
+              idAmbiente= $(f).find('td:eq(1)').text();
+              idSolicitante= $(f).find('td:eq(2)').text();
+              tarea= $(f).find('td:eq(3)').text();
+              fecha_generada= $(f).find('td:eq(4)').text();
+              fecha_requerida= $(f).find('td:eq(5)').text();
+              hora_requerida= $(f).find('td:eq(6)').text();
+              idEstado= $(f).find('td:eq(7)').text();
+              hora_realizada= $(f).find('td:eq(8)').text();
+              observaciones= $(f).find('td:eq(9)').text();
+              idUsuario= $(f).find('td:eq(10)').text();
+              
+              $('#fin-codigo').val(idSol_correctivo);
+              $('#fin-lugar').val(idAmbiente);
+              $('#fin-tipo').val(fecha_generada);
+              $('#fin-desc').val(fecha_requerida);
+              $('#fin-desc2').val(idUsuario);
+          }
+
+          function mostrar_datos3(f)
+          {
+              idSol_correctivo= $(f).find('td:eq(0)').text();
+              idAmbiente= $(f).find('td:eq(1)').text();
+              idSolicitante= $(f).find('td:eq(2)').text();
+              tarea= $(f).find('td:eq(3)').text();
+              fecha_generada= $(f).find('td:eq(4)').text();
+              fecha_requerida= $(f).find('td:eq(5)').text();
+              hora_requerida= $(f).find('td:eq(6)').text();
+              idEstado= $(f).find('td:eq(7)').text();
+              hora_realizada= $(f).find('td:eq(8)').text();
+              observaciones= $(f).find('td:eq(9)').text();
+              idUsuario= $(f).find('td:eq(10)').text();
+              
+              $('#mod-desc').val(observaciones);
+             
+          }
+
+          function mod(){
+
+      setTimeout("$('.ocultar').hide();", 5000);
+            var o = "a="+encodeURIComponent(idSol_correctivo)+"&opcion="+ encodeURIComponent('mover')+"&estado="+ encodeURIComponent(idEstado);
+            console.log(o);
+            
+              $.ajax({
+                url: '../../controllers/seguimiento.php',
+                type: 'POST',
+                data: o
+              })
+              .done(function(data2) {
+                var resp = $.parseJSON(data2);//json a objeto
+                console.log(data2);
+                console.log(resp);
 
               })
               .fail(function() {
@@ -134,7 +326,7 @@
     </div>
   <div class="form-group">
     <div class="col-sm-offset-5 col-sm-2">
-      <button type="button" class="btn btn-primary">manalizar</button>
+      <button type="button" class="btn btn-primary">analizar</button>
     </div>
     
   </div>
@@ -153,7 +345,7 @@
     </div>
     <div class="form-group">
     <div class="col-sm-offset-5 col-sm-2">
-      <button type="button" class="btn btn-primary">Registrar</button>
+      <button type="button" class="btn btn-primary" onclick="javascript:mod();">Registrar</button>
     </div>
   </div>
 </form>
@@ -179,38 +371,8 @@
         </button>
     </div>
   </div>
-<div class="form-group">
-    <div class="col-sm-offset-2 col-sm-8 table-responsive">
 
-    <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
-
-    </div>
-  </div>
+<div id="mostrar-fin"></div>
 
 
   <div class="form-group">
@@ -237,25 +399,25 @@
     <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Lugar:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="fin-lugar" name="fin-lugar" placeholder="Nombre" >
+        <input type="text" class="form-control" id="fin-lugar" name="fin-lugar" placeholder="lugar" >
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Fecha Inicio:</label>
       <div class="col-sm-7">
-        <input required type="text" class="form-control" id="fin-tipo" name="fin-tipo" placeholder="tipo" >
+        <input required type="text" class="form-control" id="fin-tipo" name="fin-tipo" placeholder="Fecha" >
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Fecha Fin</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="fin-desc" name="fin-desc" placeholder="Descripcion" >
+        <input type="text" class="form-control" id="fin-desc" name="fin-desc" placeholder="Fecha" >
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label"> Responsable</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="fin-desc" name="fin-desc" placeholder="Descripcion" >
+        <input type="text" class="form-control" id="fin-desc2" name="fin-desc2" placeholder="resp" >
       </div>
     </div>
 
@@ -285,7 +447,7 @@
   <div class="form-group">
     <label class="col-sm-offset-1 col-sm-2 control-label">Codigo:</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="inputcodigo" placeholder="Codigo"  >
+      <input type="text" class="form-control" id="inputcodigo2" placeholder="Codigo"  >
     </div>
     <div class="col-xs-6 col-sm-2">
        <button  type="button" class="list-group-item" data-toggle="tooltip" data-placement="top" title="Busqueda Mantenimiento">
@@ -297,40 +459,9 @@
     </div>
   </div>
 
+<div id="mostrar-todos"></div>
 
 
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-8 table-responsive">
-
-    <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
-
-    </div>
-  </div>
  
    <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Descripcion</label>

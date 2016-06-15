@@ -36,6 +36,83 @@ switch ($opcion) {
 			flush();
 			
 		break;
+		case "buscar_finalizados":
+		$ids=$_POST['a'];
+			$c=0;
+			$pres=Seguimiento::lista_finalizados($ids);
+						$resultados=array();
+
+			 foreach ($pres as $pre) {
+			 	$resultados[$c]=array(
+
+
+			 		'idSol_correctivo'=>$pre->idSol_correctivo,
+			 		'idAmbiente'=>$pre->idAmbiente,
+			 		'idSolicitante'=>$pre->idSolicitante,
+			 		'tarea'=>$pre->tarea,
+			 		'fecha_generada'=>$pre->fecha_generada,
+			 		'fecha_requerida'=>$pre->fecha_requerida,
+			 		'hora_requerida'=>$pre->hora_requerida,
+			 		'idEstado'=>$pre->idEstado,
+			 		'hora_realizada'=>$pre->hora_realizada,
+			 		'observaciones'=>$pre->observaciones,
+					'idUsuario'=>$pre->idUsuario);
+
+					$c++;
+			 }
+			echo json_encode($resultados);
+			flush();
+			
+		break;
+
+		case "buscar_todos":
+		$ids=$_POST['a'];
+			$c=0;
+			$pres=Seguimiento::lista_todos($ids);
+						$resultados=array();
+
+			 foreach ($pres as $pre) {
+			 	$resultados[$c]=array(
+
+
+			 		'idSol_correctivo'=>$pre->idSol_correctivo,
+			 		'idAmbiente'=>$pre->idAmbiente,
+			 		'idSolicitante'=>$pre->idSolicitante,
+			 		'tarea'=>$pre->tarea,
+			 		'fecha_generada'=>$pre->fecha_generada,
+			 		'fecha_requerida'=>$pre->fecha_requerida,
+			 		'hora_requerida'=>$pre->hora_requerida,
+			 		'idEstado'=>$pre->idEstado,
+			 		'hora_realizada'=>$pre->hora_realizada,
+			 		'observaciones'=>$pre->observaciones,
+					'idUsuario'=>$pre->idUsuario);
+
+					$c++;
+			 }
+			echo json_encode($resultados);
+			flush();
+			
+		break;
+
+
+
+
+		case "mover":
+
+		$ids=$_POST['a'];
+
+		//$idEstado=3;
+		
+
+		$seguimiento=Seguimiento::modificar_estado($ids,3);
+		
+		
+		//$mod=Activo::modificar_cantidad_activo($id,$estado);
+					
+			flush();			
+		break;
+
+
 		/*case "modificar":
 		$activo_mod=new Activo();
 					$activo_mod->idActivo=$_POST['mod-codigo'];
