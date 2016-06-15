@@ -19,12 +19,56 @@
     <script type="text/javascript">
     	$(document).ready(function() {
 
-    		$(function () {
-				$('[data-toggle="tooltip"]').tooltip()
-			})
+        $('#inputcodigo').on('keyup', buscar_teclado_modificar)
 
     	})
-     
+     function buscar_teclado_modificar(){
+            var n = $('#inputcodigo').val();
+            console.log(n);
+            var o = "a="+encodeURIComponent(n)+"&opcion="+ encodeURIComponent('buscar');//{a: n, opcion:'buscar'};
+            console.log(o);
+            
+              $.ajax({
+                url: '../../controllers/seguimiento.php',
+                type: 'POST',
+                data: o
+              })
+              .done(function(data2) {
+                var resp = $.parseJSON(data2);//json a objeto
+                console.log(data2);
+                console.log(resp);
+
+                var html = '<div class="table-responsive col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Codigo</th><th style="display:none"></th><th>Nombre</th><th>Descripcion</th></tr></thead><tbody>';
+        
+                  for(i in resp){ 
+
+
+
+
+                    html+='<tr onclick="mostrar_datos(this)"><td>'
+
+                    +resp[i].idSol_correctivo+'</td><td>'
+                    +resp[i].idAmbiente+'</td><td style="display:none">'
+                    +resp[i].idSolicitante+'</td><td style="display:none">'
+                    +resp[i].tarea+'</td><td style="display:none">'
+                    +resp[i].fecha_generada+'</td><td style="display:none">'
+                    +resp[i].fecha_requerida+'</td><td>'
+                    +resp[i].hora_requerida+'</td><td>'
+                    +resp[i].idEstado+'</td><td style="display:none">'
+                    +resp[i].hora_realizada+'</td><td style="display:none">'
+                    +resp[i].observaciones+'</td><td style="display:none">'
+                    +resp[i].idUsuario+'</td></tr>';
+                  }
+                  html+= '</tbody></table></div>';
+
+                  $('#mostrar-sol-co').html(html);
+
+              })
+              .fail(function() {
+                console.log("error");
+              })
+             
+          }
     </script>
 </head>
 <body>
@@ -73,40 +117,8 @@
     </div>
   </div>
 
+<div id="mostrar-sol-co"></div>
 
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-8 table-responsive">
-
-    <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
-
-    </div>
-  </div>
  
   <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Codigo:</label>
