@@ -36,118 +36,98 @@
     require_once ("../../../sistema_activos/barramenusr.php");
   ?>
 
-<!-- Contenedor Pestaña ABM Equipo -->
+<!-- Contenedor Pestaña ABM maatenimiento -->
 <div class="col-sm-offset-2 col-sm-8">
 <div class="panel panel-primary">
   <div class="panel-heading">Mantenimiento</div>
   <div class="panel-body">
 
 
-<!-- Pestaña ABM Equipo -->
+<!-- Pestaña ABM para mantenimiento -->
 
 <ul class="nav nav-tabs" role="tablist">
  <li class="active"><a href="javascript:;" role="tab" data-toggle="tab" data-target="#tabs-fouth">Programados</a></li>
   <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#tabs-first">Registrar</a></li>
   <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#tabs-second">Modificar</a></li>
-  <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#tabs-third">Eliminar</a></li>
+  <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#tabs-third">Mantenimiento Realizado</a></li>
 </ul>
-<!-- Contenido Pestaña ABM Equipo -->
+<!-- Contenido Pestaña Registrar -->
 <div class="tab-content">
 
-<!-- Contenido Pestaña registrar Equipo-->
+<!-- Contenido Pestaña registrar mantenimiento-->
 
  <div class="tab-pane fade in" id="tabs-first">
   
-<!-- FORM CREAR Equipo -->
+<!-- FORM CREAR Activo -->
 <h4 align="center">Registrar Mantenimiento</h4>
-  <form class="form-horizontal">
-  
-  <br>
+
+
+  <form class="form-horizontal" id="formRegistro" method="POST" enctype="multipart/form-data">
   <div class="form-group">
     <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
-    <div class="col-sm-3">
-      <select class="form-control">
+    <div class="col-sm-2">
+      <select required class="form-control" id="reg-ambiente" name="reg-ambiente" >
         <option></option>
-        <option>Ambientes </option>
-        <option>Habitaciones </option>
-        <option>Maquinaria y Objetos </option>
+        <option value="1">Habitacion </option>
+        <option value="2">Salon</option>
+        <option value="3">Piscina</option>
       </select>
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
-    <div class="col-sm-3">
-      <select class="form-control">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Tipo de Mantenimiento</label>
+    <div class="col-sm-2">
+      <select required class="form-control" id="reg-tman" name="reg-tman" >
         <option></option>
-        <option>Ambientes </option>
-        <option>Habitaciones </option>
-        <option>Maquinaria y Objetos </option>
+        <option value="1">Preventivo </option>
+        <option value="2">Especifico</option>
       </select>
     </div>
   </div>
-  <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
-    <div class="col-sm-3">
-      <select class="form-control">
-        <option></option>
-        <option>Ambientes </option>
-        <option>Habitaciones </option>
-        <option>Maquinaria y Objetos </option>
-      </select>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
-    <div class="col-sm-3">
-      <select class="form-control">
-        <option></option>
-        <option>Ambientes </option>
-        <option>Habitaciones </option>
-        <option>Maquinaria y Objetos </option>
-      </select>
-    </div>
-  </div>
-    <div class="form-group">
+    <div class="form-group" >
       <label class="col-sm-offset-1 col-sm-2 control-label">Codigo:</label>
       <div class="col-sm-7">
-        <input required type="text" class="form-control" id="inputNombre" placeholder="Codigo "  >
+        <input required type="text" class="form-control" id="reg-codigo" name="reg-codigo" placeholder="Codigo " onkeypress="return soloNumeros(event)" >
       </div>
+      
     </div>
 
+    
     <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
+      <label class="col-sm-offset-1 col-sm-2 control-label">Nombre del solicitante</label>
       <div class="col-sm-7">
-        <input required type="text" class="form-control" id="inputApellido1" placeholder="Nombre" >
+        <input required type="text" class="form-control" id="reg-nomsol" name="reg-nomsol" placeholder="Nombre" onkeypress="return soloLetras(event)" >
       </div>
     </div>
-
-    <div class="form-group">
+  <div class="form-group ">
+            <label class="col-sm-3 control-label">Fecha Solicitada</label>
+          <div class="col-xs-3">
+            <input type="date" name="fecha-sol" step="1" min="2015-01-01" max="2020-12-31" value="<?php echo date("Y-m-d");?>" required>
+          </div>              
+  </div>
+  <div class="form-group ">
+            <label class="col-sm-3 control-label">Fecha Requerida</label>
+          <div class="col-xs-3">
+            <input type="date" name="fecha-req" step="1" min="2015-01-01" max="2020-12-31" value="<?php echo date("Y-m-d");?>" required>
+          </div>              
+  </div>
+<div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Descripcion:</label>
       <div class="col-sm-7">
-        <input required type="text" class="form-control" id="inputApellido2" placeholder="Descripcion" >
+      <textarea class="form-control" rows="4" type="text" class="form-control" id="reg-desc" name="reg-desc" placeholder="Descripcion del activo" required ></textarea>      
       </div>
-    </div>
-
-  
-
-  <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Fotografia Activo:</label>
-      <div class="col-sm-7">
-        <img class="img-circle media-object" width="300" height="300" src="/sistema_activos/Imagenes/Mueble5.png">
-      </div>
-    </div>
-
-  <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Subir imagen:</label>
-      <div class="col-sm-4">
-        <label class="col-sm-2 control-label">Ruta</label>
-      </div>
-  
-      <button  type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-open" aria-hidden="true"></span>        
-            Subir Archivo        
-        </button>
   </div>
+<div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Estado General</label>
+    <div class="col-sm-2">
+      <select required class="form-control" id="reg-estado" name="reg-estado" >
+        <option></option>
+        <option value="1">Buen Estado </option>
+        <option value="2">Moderado</option>
+      </select>
+    </div>
+  </div>
+
 
   <div class="form-group">
     <div class="col-sm-offset-4 col-sm-2">
@@ -157,14 +137,16 @@
       <button type="submit" class="btn btn-success">Registrar</button>
     </div>
   </div>
+  <div id="resultado_reg"></div>
 
    
 </form>
- <!-- FIN FORM CREAR Equipo -->
+ <!-- FIN FORM CREAR mantenimiento -->
+
 
  </div>
 
-<!-- Fin Contenido Pestaña registrar Equipo-->
+<!-- Fin Contenido Pestaña registrar matenimiento-->
 
 <!--  Contenido Pestaña modificar Equipo-->
 
@@ -172,13 +154,14 @@
 
 
   <!-- FORM MODIFICAR Equipo -->
-<h4 align="center">Modificar Activo</h4>
-<form class="form-horizontal" name="modificar" id="modificar">
+<h4 align="center">Modificar Mantenimiento</h4>
+
+<form class="form-horizontal" id="formModificar" method="POST" enctype="multipart/form-data">
   <br>
   <div class="form-group">
     <label class="col-sm-offset-1 col-sm-2 control-label" >Codigo:</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="inputcodigoMo" placeholder="Codigo"  >
+      <input type="text" class="form-control" id="buscar-codigo" placeholder="Codigo" onkeypress="return soloNumeros(event)" >
     </div>
     <div class="col-xs-6 col-sm-2">
        <button  type="button" class="list-group-item" data-toggle="tooltip" data-placement="top" title="Busqueda de jugador">
@@ -194,110 +177,95 @@
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-8 table-responsive">
+    
+<div id="mostrar-tabla-mod"></div>
 
-    <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
-
-  	</div>
+    </div>
   </div>
 
   <div>
-    <center><h4>Datos del Jugador</h4></center>
+    <center><h4>Datos del Mantenimiento</h4></center>
   </div>
- 
-  
-    <div class="form-group">
+   <form class="form-horizontal" id="formRegistro" method="POST" enctype="multipart/form-data">
+  <div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
+    <div class="col-sm-2">
+      <select required class="form-control" id="reg-ambiente" name="reg-ambiente" >
+        <option></option>
+        <option value="1">Habitacion </option>
+        <option value="2">Salon</option>
+        <option value="3">Piscina</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Tipo de Mantenimiento</label>
+    <div class="col-sm-2">
+      <select required class="form-control" id="reg-tman" name="reg-tman" >
+        <option></option>
+        <option value="1">Preventivo </option>
+        <option value="2">Especifico</option>
+      </select>
+    </div>
+  </div>
+    <div class="form-group" >
       <label class="col-sm-offset-1 col-sm-2 control-label">Codigo:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="inputCodigoMod" placeholder="Codigo"  >
+        <input required type="text" class="form-control" id="reg-codigo" name="reg-codigo" placeholder="Codigo " onkeypress="return soloNumeros(event)" >
       </div>
       
     </div>
 
+    
+    
     <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
+      <label class="col-sm-offset-1 col-sm-2 control-label">Nombre del solicitante</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="inputnombreMod" placeholder="Nombre" >
+        <input required type="text" class="form-control" id="reg-nomsol" name="reg-nomsol" placeholder="Nombre" onkeypress="return soloLetras(event)" >
       </div>
     </div>
-
-    <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Descripcion</label>
+  <div class="form-group ">
+            <label class="col-sm-3 control-label">Fecha Solicitada</label>
+          <div class="col-xs-3">
+            <input type="date" name="fecha-sol" step="1" min="2015-01-01" max="2020-12-31" value="<?php echo date("Y-m-d");?>" required>
+          </div>              
+  </div>
+  <div class="form-group ">
+            <label class="col-sm-3 control-label">Fecha Requerida</label>
+          <div class="col-xs-3">
+            <input type="date" name="fecha-req" step="1" min="2015-01-01" max="2020-12-31" value="<?php echo date("Y-m-d");?>" required>
+          </div>              
+  </div>
+<div class="form-group">
+      <label class="col-sm-offset-1 col-sm-2 control-label">Descripcion:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="inputdescripcionMod" placeholder="Descripcion" >
+      <textarea class="form-control" rows="4" type="text" class="form-control" id="reg-desc" name="reg-desc" placeholder="Descripcion del activo" required ></textarea>      
       </div>
-    </div>
-
-
-  <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
-    <div class="col-sm-3">
-      <select class="form-control">
+  </div>
+<div class="form-group">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Estado General</label>
+    <div class="col-sm-2">
+      <select required class="form-control" id="reg-estado" name="reg-estado" >
         <option></option>
-        <option>Ambiente 1</option>
-        <option>Ambiente 2</option>
-        <option>Ambiente 3</option>
-        <option>Ambiente 4</option>
-        <option>Ambiente 5</option>
-        <option>Ambiente 6</option>
-        <option>Ambiente 7</option>
+        <option value="1">Buen Estado </option>
+        <option value="2">Moderado</option>
       </select>
     </div>
   </div>
-
-    <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Fotografia Activo:</label>
-      <div class="col-sm-7">
-        <img class="img-circle media-object" width="300" height="300" src="/sistema_activos/Imagenes/Mueble5.png">
-      </div>
-    </div>
-
-  <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Subir imagen:</label>
-      <div class="col-sm-4">
-        <label for="inputSubirMo" class="col-sm-2 control-label">Ruta</label>
-      </div>
-      <button type="button" class="btn btn-default ">
-        <span class="glyphicon glyphicon-open " aria-hidden="true"></span>
-        Subir archivo
-      </button>
-  </div>
+  
 
   <div class="form-group">
     <div class="col-sm-offset-4 col-sm-2">
       <button type="button" class="btn btn-primary">Limpiar</button>
     </div>
     <div class="col-sm-offset-1 col-sm-2">
-      <button type="submit" class="btn btn-success">Modificar</button>
+      <button type="submit" class="btn btn-success">Registrar</button>
     </div>
   </div>
-
+  <div id="resultado_reg"></div>
   
     
+
 </form>
 <!-- FIN FORM MODIFICAR Equipo -->
  </div>
@@ -310,14 +278,14 @@
   <!-- FORM ELIMINAR Equipo -->
 
 
-<h4 align="center">Eliminar Activo</h4>
+<h4>Cambiar Estado de Mantenimiento</h4>
 
-<form class="form-horizontal" name="eliminar" id="eliminar">
+<form class="form-horizontal" name="eliminar" id="formEliminar">
   <br>
   <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label" id="buscarcodEli" >Codigo:</label>
+    <label class="col-sm-offset-1 col-sm-2 control-label"  >Codigo:</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="inputcodigoEli" placeholder="Codigo"  >
+      <input type="text" class="form-control" id="buscar-codigo-eli" placeholder="Codigo" onkeypress="return soloNumeros(event)" >
     </div>
     <div class="col-xs-6 col-sm-2">
        <button  type="button" class="list-group-item" data-toggle="tooltip" data-placement="top" title="Busqueda Activos">
@@ -329,73 +297,61 @@
     </div>
   </div>
 
-
-
-  <div class="form-group">
+<div class="form-group">
     <div class="col-sm-offset-2 col-sm-8 table-responsive">
-     <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
+    
+<div id="mostrar-tabla-eli"></div>
+
+    </div>
   </div>
 
   <div>
-    <center><h4>Datos del Jugador</h4></center>
+    <center><h4>Datos del Activo</h4></center>
   </div>
-
-    <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Fotografia Activo:</label>
+     <div class="form-group">
+      <label class="col-sm-offset-1 col-sm-2 control-label">Codigo:</label>
       <div class="col-sm-7">
-        <img class="img-circle media-object" width="300" height="300" src="/sistema_activos/Imagenes/Mueble5.png">
+        <input type="text" class="form-control" id="eli-codigo" placeholder="Codigo"  readonly="">
       </div>
-    </div>
-  
+    </div> 
     <div class="form-group">
       <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" id="inputNombreEli" placeholder="Nombre "  readonly="">
+        <input type="text" class="form-control" id="eli-nombre" placeholder="Nombre "  readonly="">
       </div>
       
     </div>
 
-    <div class="form-group">
-      <label class="col-sm-offset-1 col-sm-2 control-label">Codigo</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control" id="inputcodigoEli" placeholder="Codigo"  readonly="">
-      </div>
-    </div>
-
-
-
   <div class="form-group">
-    <label class="col-sm-offset-1 col-sm-2 control-label">Ambiente</label>
-    <div class="col-sm-3">
-      <input type="text" class="form-control" id="inputambienteEli" placeholder="Ambiente" readonly="">
+    <label class="col-sm-offset-1 col-sm-2 control-label">Descripcion:</label>
+    <div class="col-sm-5">
+      <textarea type="text" class="form-control" id="eli-desc" placeholder="Descripcion" readonly=""></textarea>
     </div>
   </div>
+
+  <div class="form-group">
+      <label class="col-sm-offset-1 col-sm-2 control-label">Nombre encargado del mantenimiento</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="en-nombre" name="en-nombre" placeholder="Nombre ">
+      </div>
+      
+    </div>
+  <div class="form-group ">
+            <label class="col-sm-3 control-label">Fecha Solicitada</label>
+          <div class="col-xs-3">
+            <input type="date" name="fecha-sol" step="1" min="2015-01-01" max="2020-12-31" value="<?php echo date("Y-m-d");?>" required readonly="">
+          </div>              
+  </div>
+
+  <div class="form-group ">
+            <label class="col-sm-3 control-label">Fecha Realizada</label>
+          <div class="col-xs-3">
+            <input type="date" name="fecha-realizada" step="1" min="2015-01-01" max="2020-12-31" value="<?php echo date("Y-m-d");?>" required>
+          </div>              
+  </div>
+
+
+
 
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-2">
@@ -407,6 +363,9 @@
   </button>
   </div>
   </div>
+
+  <div id="resultado_eli"></div>
+</form>
 
 <!-- Formulario modal2n -->
 
@@ -476,40 +435,7 @@
 
 
 
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-8 table-responsive">
-
-    <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
-
-    </div>
-  </div>
- 
-
+  <div id="mostrar2"></div>
   <div class="form-group">
     <div class="col-sm-offset-4 col-sm-2">
       <button type="button" class="btn btn-primary">Imprimir</button>
